@@ -33,7 +33,7 @@ services:
     command: "mount zurg: /data --allow-other --allow-non-empty --dir-cache-time 10s --vfs-cache-mode off"
 
   rdtclient:
-    image: rogerfar/rdtclient:2.0.95
+    image: rogerfar/rdtclient:2.0.97
     container_name: rdtclient
     environment:
       - PUID=${UID}
@@ -57,7 +57,7 @@ services:
     restart: unless-stopped
 
   prowlarr:
-    image: lscr.io/linuxserver/prowlarr:1.29.2
+    image: lscr.io/linuxserver/prowlarr:1.31.2
     container_name: prowlarr
     environment:
       - PUID=${UID}
@@ -72,7 +72,7 @@ services:
       - flaresolverr
 
   sonarr:
-    image: lscr.io/linuxserver/sonarr:4.0.12
+    image: lscr.io/linuxserver/sonarr:4.0.13
     container_name: sonarr
     environment:
       - PUID=${UID}
@@ -93,7 +93,7 @@ services:
       - rclone
 
   radarr:
-    image: lscr.io/linuxserver/radarr:5.17.2
+    image: lscr.io/linuxserver/radarr:5.18.4
     container_name: radarr
     environment:
       - PUID=${UID}
@@ -114,7 +114,7 @@ services:
       - rclone
 
   jellyfin:
-    image: jellyfin/jellyfin:10.10.3
+    image: jellyfin/jellyfin:10.10.6
     container_name: jellyfin
     user: ${UID}:${GID}
     ports:
