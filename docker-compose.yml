@@ -35,6 +35,7 @@ services:
   rdtclient:
     image: rogerfar/rdtclient:2.0.97
     container_name: rdtclient
+    network_mode: service:gluetun
     environment:
       - PUID=${UID}
       - PGID=${GID}
@@ -43,8 +44,6 @@ services:
       - rdtclientdb:/data/db
       - ./content/symlinks:/content/symlinks
       - ./content/rd:/content/rd
-    ports:
-      - 6500:6500
     restart: unless-stopped
     depends_on:
       - rclone
@@ -52,21 +51,43 @@ services:
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:v3.3.21
     container_name: flaresolverr
-    ports:
-      - 8191:8191
+    network_mode: service:gluetun
     restart: unless-stopped
+
+  gluetun:
+    image: qmcgaw/gluetun
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    volumes:
+      - ./gluetun/${OPENVPN_FILENAME}:/gluetun/custom.conf/${OPENVPN_FILENAME}:ro
+    ports:
+      - 6500:6500 # rdtclient
+      - 9696:9696 # prowlarr
+      - 8989:8989 # sonarr
+      - 7878:7878 # radarr
+      - 8096:8096 # jellyfin
+      - 5055:5055 # jellyseerr
+    environment:
+      - VPN_SERVICE_PROVIDER=custom
+      - VPN_TYPE=openvpn
+      - OPENVPN_CUSTOM_CONFIG=/gluetun/custom.conf/${OPENVPN_FILENAME}
+      - OPENVPN_USER=${OPENVPN_USER}
+      - OPENVPN_PASSWORD=${OPENVPN_PASSWORD}
+      - TZ=${TZ}
 
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:1.31.2
     container_name: prowlarr
+    network_mode: service:gluetun
     environment:
       - PUID=${UID}
       - PGID=${GID}
       - TZ=${TZ}
     volumes:
       - prowlarrconfig:/config
-    ports:
-      - 9696:9696
     restart: unless-stopped
     depends_on:
       - flaresolverr
@@ -74,6 +95,7 @@ services:
   sonarr:
     image: lscr.io/linuxserver/sonarr:4.0.13
     container_name: sonarr
+    network_mode: service:gluetun
     environment:
       - PUID=${UID}
       - PGID=${GID}
@@ -84,8 +106,6 @@ services:
       - ./content/rd:/content/rd
       - ./content/media/shows:/content/media/shows
       - ./content/media/anime_shows:/content/media/anime_shows
-    ports:
-      - 8989:8989
     restart: unless-stopped
     depends_on:
       - prowlarr
@@ -95,6 +115,7 @@ services:
   radarr:
     image: lscr.io/linuxserver/radarr:5.18.4
     container_name: radarr
+    network_mode: service:gluetun
     environment:
       - PUID=${UID}
       - PGID=${GID}
@@ -105,8 +126,6 @@ services:
       - ./content/rd:/content/rd
       - ./content/media/movies:/content/media/movies
       - ./content/media/anime_movies:/content/media/anime_movies
-    ports:
-      - 7878:7878
     restart: unless-stopped
     depends_on:
       - prowlarr
@@ -117,8 +136,7 @@ services:
     image: jellyfin/jellyfin:10.10.6
     container_name: jellyfin
     user: ${UID}:${GID}
-    ports:
-      - 8096:8096
+    network_mode: service:gluetun
     volumes:
       - jellyfinconfig:/config
       - jellyfincache:/cache
@@ -130,8 +148,7 @@ services:
   jellyseerr:
     image: fallenbagel/jellyseerr:2.3.0
     container_name: jellyseerr
-    ports:
-      - 5055:5055
+    network_mode: service:gluetun
     volumes:
       - jellyseerrconfig:/app/config
     restart: unless-stopped
