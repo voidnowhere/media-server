@@ -33,7 +33,7 @@ services:
     command: "mount zurg: /data --allow-other --allow-non-empty --dir-cache-time 10s --vfs-cache-mode off"
 
   rdtclient:
-    image: rogerfar/rdtclient:2.0.97
+    image: rogerfar/rdtclient:2.0.102
     container_name: rdtclient
     environment:
       - PUID=${UID}
@@ -52,8 +52,6 @@ services:
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:v3.3.21
     container_name: flaresolverr
-    ports:
-      - 8191:8191
     restart: unless-stopped
 
   prowlarr:
@@ -93,7 +91,7 @@ services:
       - rclone
 
   radarr:
-    image: lscr.io/linuxserver/radarr:5.18.4
+    image: lscr.io/linuxserver/radarr:5.19.3
     container_name: radarr
     environment:
       - PUID=${UID}
@@ -117,18 +115,22 @@ services:
     image: jellyfin/jellyfin:10.10.6
     container_name: jellyfin
     user: ${UID}:${GID}
+    group_add:
+      - ${RENDER_GROUP}
     ports:
       - 8096:8096
     volumes:
       - jellyfinconfig:/config
       - jellyfincache:/cache
       - ./content:/content:ro
+    devices:
+      - /dev/dri/renderD128:/dev/dri/renderD128
     restart: unless-stopped
     depends_on:
       - rclone
 
   jellyseerr:
-    image: fallenbagel/jellyseerr:2.3.0
+    image: fallenbagel/jellyseerr:2.5.0
     container_name: jellyseerr
     ports:
       - 5055:5055
