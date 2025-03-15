@@ -30,7 +30,14 @@ services:
       - /dev/fuse:/dev/fuse:rwm
     depends_on:
       - zurg
-    command: "mount zurg: /data --allow-other --allow-non-empty --dir-cache-time 10s --vfs-cache-mode off"
+    command: >
+      mount zurg: /data
+      --allow-other
+      --allow-non-empty
+      --dir-cache-time 10s
+      --vfs-cache-mode full
+      --vfs-cache-max-size ${CACHE_MAX_SIZE}
+      --vfs-cache-max-age ${CACHE_MAX_AGE}
 
   rdtclient:
     image: rogerfar/rdtclient:2.0.102
