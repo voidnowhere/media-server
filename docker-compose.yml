@@ -6,7 +6,7 @@ services:
     ports:
       - 9999:9999
     healthcheck:
-      test: curl -f localhost:9999/dav/version.txt || exit 1
+      test: ./healthcheck.sh
     volumes:
       - ./zurg/config.yml:/app/config.yml:ro
       - zurgdata:/app/data
