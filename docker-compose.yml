@@ -40,7 +40,7 @@ services:
       --vfs-cache-max-age ${CACHE_MAX_AGE}
 
   rdtclient:
-    image: rogerfar/rdtclient:2.0.111
+    image: rogerfar/rdtclient:2.0.113
     container_name: rdtclient
     environment:
       - PUID=${UID}
