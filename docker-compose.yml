@@ -38,6 +38,7 @@ services:
       --vfs-cache-mode full
       --vfs-cache-max-size ${CACHE_MAX_SIZE}
       --vfs-cache-max-age ${CACHE_MAX_AGE}
+      --bwlimit ${BANDWIDTH_LIMIT}
 
   rdtclient:
     image: rogerfar/rdtclient:2.0.113
