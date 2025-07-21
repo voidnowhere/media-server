@@ -158,7 +158,7 @@ services:
       - rclone
 
   jellyseerr:
-    image: fallenbagel/jellyseerr:2.7.0
+    image: fallenbagel/jellyseerr:2.7.1
     container_name: jellyseerr
     ports:
       - 5055:5055
