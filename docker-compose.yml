@@ -41,7 +41,7 @@ services:
       --bwlimit ${BANDWIDTH_LIMIT}
 
   rdtclient:
-    image: rogerfar/rdtclient:2.0.115
+    image: rogerfar/rdtclient:2.0.116
     container_name: rdtclient
     environment:
       - PUID=${UID}
