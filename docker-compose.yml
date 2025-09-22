@@ -58,7 +58,7 @@ services:
       - rclone
 
   flaresolverr:
-    image: ghcr.io/flaresolverr/flaresolverr:v3.4.0
+    image: ghcr.io/flaresolverr/flaresolverr:v3.4.1
     container_name: flaresolverr
     restart: unless-stopped
 
