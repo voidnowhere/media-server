@@ -1,0 +1,5 @@
+[realdebrid]
+type = webdav
+pacer_min_sleep = 0
+url = http://decypharr:8282/webdav
+vendor = other

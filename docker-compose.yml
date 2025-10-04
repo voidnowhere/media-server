@@ -1,15 +1,25 @@
 services:
-  zurg:
-    image: ghcr.io/debridmediamanager/zurg-testing:v0.9.3-final
-    container_name: zurg
-    restart: unless-stopped
+  decypharr:
+    image: cy01/blackhole:v1.1.4
+    container_name: decypharr
     ports:
-      - 9999:9999
-    healthcheck:
-      test: ./healthcheck.sh
+      - 8282:8282
     volumes:
-      - ./zurg/config.yml:/app/config.yml:ro
-      - zurgdata:/app/data
+      - decypharrconfig:/app
+      - ./content/mnt:/content/mnt
+      - ./content/symlinks:/content/symlinks
+      - ./content/media:/content/media
+    restart: unless-stopped
+    environment:
+      PUID: ${UID}
+      PGID: ${GID}
+    healthcheck:
+      test: ["CMD", "/usr/bin/healthcheck", "--config", "/app/"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+    depends_on:
+      - rclone
 
   rclone:
     image: rclone/rclone:1.71.1
@@ -20,42 +30,23 @@ services:
       PUID: ${UID}
       PGID: ${GID}
     volumes:
-      - ./content/rd:/data:rshared
-      - ./zurg/rclone.conf:/config/rclone/rclone.conf:ro
+      - ./content/mnt:/data:rshared
+      - ./rclone/rclone.conf:/config/rclone/rclone.conf:ro
     cap_add:
       - SYS_ADMIN
     security_opt:
       - apparmor:unconfined
     devices:
       - /dev/fuse:/dev/fuse:rwm
-    depends_on:
-      - zurg
     command: >
-      mount zurg: /data
+      mount realdebrid: /data
       --allow-other
       --allow-non-empty
       --dir-cache-time 10s
-      --vfs-cache-mode full
-      --vfs-cache-max-size ${CACHE_MAX_SIZE}
-      --vfs-cache-max-age ${CACHE_MAX_AGE}
-      --bwlimit ${BANDWIDTH_LIMIT}
-
-  rdtclient:
-    image: rogerfar/rdtclient:2.0.116
-    container_name: rdtclient
-    environment:
-      - PUID=${UID}
-      - PGID=${GID}
-      - TZ=${TZ}
-    volumes:
-      - rdtclientdb:/data/db
-      - ./content/symlinks:/content/symlinks
-      - ./content/rd:/content/rd
-    ports:
-      - 6500:6500
-    restart: unless-stopped
-    depends_on:
-      - rclone
+      --vfs-cache-mode ${RCLONE_VFS_CACHE_MODE}
+      --vfs-cache-max-size ${RCLONE_VFS_CACHE_MAX_SIZE}
+      --vfs-cache-max-age ${RCLONE_VFS_CACHE_MAX_AGE}
+      --bwlimit ${RCLONE_BWLIMIT}
 
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:v3.4.1
@@ -76,7 +67,7 @@ services:
     restart: unless-stopped
     depends_on:
       - flaresolverr
-  
+
   sonarr:
     image: lscr.io/linuxserver/sonarr:4.0.15
     container_name: sonarr
@@ -87,16 +78,18 @@ services:
     volumes:
       - sonarrconfig:/config
       - ./content/symlinks:/content/symlinks
-      - ./content/rd:/content/rd
+      - ./content/mnt:/content/mnt
       - ./content/media/shows:/content/media/shows
       - ./content/media/anime_shows:/content/media/anime_shows
     ports:
       - 8989:8989
     restart: unless-stopped
     depends_on:
-      - prowlarr
-      - rdtclient
-      - rclone
+      prowlarr:
+        condition: service_started
+      decypharr:
+        condition: service_healthy
+        restart: true
 
   radarr:
     image: lscr.io/linuxserver/radarr:5.27.5
@@ -108,17 +101,19 @@ services:
     volumes:
       - radarrconfig:/config
       - ./content/symlinks:/content/symlinks
-      - ./content/rd:/content/rd
+      - ./content/mnt:/content/mnt
       - ./content/media/movies:/content/media/movies
       - ./content/media/anime_movies:/content/media/anime_movies
     ports:
       - 7878:7878
     restart: unless-stopped
     depends_on:
-      - prowlarr
-      - rdtclient
-      - rclone
-  
+      prowlarr:
+        condition: service_started
+      decypharr:
+        condition: service_healthy
+        restart: true
+
   bazarr:
     image: lscr.io/linuxserver/bazarr:1.5.3
     container_name: bazarr
@@ -128,7 +123,7 @@ services:
       - TZ=${TZ}
     volumes:
       - bazarrconfig:/config
-      - ./content/rd:/content/rd
+      - ./content/mnt:/content/mnt
       - ./content/media/shows:/content/media/shows
       - ./content/media/anime_shows:/content/media/anime_shows
       - ./content/media/movies:/content/media/movies
@@ -155,7 +150,9 @@ services:
       - /dev/dri/renderD128:/dev/dri/renderD128
     restart: unless-stopped
     depends_on:
-      - rclone
+      decypharr:
+        condition: service_healthy
+        restart: true
 
   jellyseerr:
     image: fallenbagel/jellyseerr:2.7.3
@@ -171,8 +168,7 @@ services:
       - jellyfin
 
 volumes:
-  zurgdata:
-  rdtclientdb:
+  decypharrconfig:
   prowlarrconfig:
   bazarrconfig:
   sonarrconfig:
