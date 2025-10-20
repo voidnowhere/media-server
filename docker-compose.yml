@@ -135,7 +135,7 @@ services:
       - radarr
 
   jellyfin:
-    image: jellyfin/jellyfin:10.10.7
+    image: jellyfin/jellyfin:10.11.0
     container_name: jellyfin
     user: ${UID}:${GID}
     group_add:
