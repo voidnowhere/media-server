@@ -32,7 +32,7 @@ services:
       - rclone
 
   rclone:
-    image: rclone/rclone:1.71.2
+    image: rclone/rclone:1.72.0
     container_name: rclone
     restart: unless-stopped
     environment:
