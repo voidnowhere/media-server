@@ -1,0 +1,53 @@
+services:
+  zurg:
+    ports: !reset []
+    networks:
+      - default
+      - reverse-proxy
+
+  decypharr:
+    ports: !reset []
+    networks:
+      - default
+      - reverse-proxy
+
+  prowlarr:
+    ports: !reset []
+    networks:
+      - default
+      - reverse-proxy
+
+  sonarr:
+    ports: !reset []
+    networks:
+      - default
+      - reverse-proxy
+
+  radarr:
+    ports: !reset []
+    networks:
+      - default
+      - reverse-proxy
+
+  bazarr:
+    ports: !reset []
+    networks:
+      - default
+      - reverse-proxy
+
+  jellyfin:
+    ports: !reset []
+    networks:
+      - default
+      - reverse-proxy
+
+  jellyseerr:
+    ports: !reset []
+    networks:
+      - default
+      - reverse-proxy
+
+networks:
+  reverse-proxy:
+    external: true
+    name: ${REVERSE_PROXY_NETWORK_NAME}
