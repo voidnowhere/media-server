@@ -1,0 +1,61 @@
+services:
+  decypharr:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.decypharr.rule=Host(`${DECYPHARR_HOST}`)"
+      - "traefik.http.routers.decypharr.entrypoints=websecure"
+      - "traefik.http.routers.decypharr.tls=true"
+      - "traefik.http.routers.decypharr.tls.certresolver=le"
+
+  prowlarr:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.prowlarr.rule=Host(`${PROWLARR_HOST}`)"
+      - "traefik.http.routers.prowlarr.entrypoints=websecure"
+      - "traefik.http.routers.prowlarr.tls=true"
+      - "traefik.http.routers.prowlarr.tls.certresolver=le"
+
+  sonarr:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sonarr.rule=Host(`${SONARR_HOST}`)"
+      - "traefik.http.routers.sonarr.entrypoints=websecure"
+      - "traefik.http.routers.sonarr.tls=true"
+      - "traefik.http.routers.sonarr.tls.certresolver=le"
+
+  radarr:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.radarr.rule=Host(`${RADARR_HOST}`)"
+      - "traefik.http.routers.radarr.entrypoints=websecure"
+      - "traefik.http.routers.radarr.tls=true"
+      - "traefik.http.routers.radarr.tls.certresolver=le"
+
+  bazarr:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.bazarr.rule=Host(`${BAZARR_HOST}`)"
+      - "traefik.http.routers.bazarr.entrypoints=websecure"
+      - "traefik.http.routers.bazarr.tls=true"
+      - "traefik.http.routers.bazarr.tls.certresolver=le"
+
+  jellyfin:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.jellyfin.rule=Host(`${JELLYFIN_HOST}`)"
+      - "traefik.http.routers.jellyfin.entrypoints=websecure"
+      - "traefik.http.routers.jellyfin.tls=true"
+      - "traefik.http.routers.jellyfin.tls.certresolver=le"
+
+  jellyseerr:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.jellyseerr.rule=Host(`${JELLYSEERR_HOST}`)"
+      - "traefik.http.routers.jellyseerr.entrypoints=websecure"
+      - "traefik.http.routers.jellyseerr.tls=true"
+      - "traefik.http.routers.jellyseerr.tls.certresolver=le"
+
+networks:
+  reverse-proxy:
+    external: true
+    name: ${REVERSE_PROXY_NETWORK_NAME}
