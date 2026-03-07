@@ -164,13 +164,16 @@ services:
         condition: service_healthy
         restart: true
 
-  jellyseerr:
-    image: fallenbagel/jellyseerr:2.7.3
-    container_name: jellyseerr
+  seerr:
+    image: ghcr.io/seerr-team/seerr:v3.1.0
+    init: true
+    container_name: seerr
+    environment:
+      - TZ=${TZ}
     ports:
       - 5055:5055
     volumes:
-      - jellyseerrconfig:/app/config
+      - seerrconfig:/app/config
     restart: unless-stopped
     depends_on:
       - sonarr
@@ -186,4 +189,4 @@ volumes:
   radarrconfig:
   jellyfinconfig:
   jellyfincache:
-  jellyseerrconfig:
+  seerrconfig:

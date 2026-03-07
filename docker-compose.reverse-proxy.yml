@@ -41,7 +41,7 @@ services:
       - default
       - reverse-proxy
 
-  jellyseerr:
+  seerr:
     ports: !reset []
     networks:
       - default
