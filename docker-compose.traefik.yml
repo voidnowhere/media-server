@@ -5,7 +5,7 @@ services:
       - "traefik.http.routers.decypharr.rule=Host(`${DECYPHARR_HOST}`)"
       - "traefik.http.routers.decypharr.entrypoints=websecure"
       - "traefik.http.routers.decypharr.tls=true"
-      - "traefik.http.routers.decypharr.tls.certresolver=le"
+      - "traefik.http.routers.decypharr.tls.certresolver=${CERTRESOLVER}"
 
   prowlarr:
     labels:
@@ -13,7 +13,7 @@ services:
       - "traefik.http.routers.prowlarr.rule=Host(`${PROWLARR_HOST}`)"
       - "traefik.http.routers.prowlarr.entrypoints=websecure"
       - "traefik.http.routers.prowlarr.tls=true"
-      - "traefik.http.routers.prowlarr.tls.certresolver=le"
+      - "traefik.http.routers.prowlarr.tls.certresolver=${CERTRESOLVER}"
 
   sonarr:
     labels:
@@ -21,7 +21,7 @@ services:
       - "traefik.http.routers.sonarr.rule=Host(`${SONARR_HOST}`)"
       - "traefik.http.routers.sonarr.entrypoints=websecure"
       - "traefik.http.routers.sonarr.tls=true"
-      - "traefik.http.routers.sonarr.tls.certresolver=le"
+      - "traefik.http.routers.sonarr.tls.certresolver=${CERTRESOLVER}"
 
   radarr:
     labels:
@@ -29,7 +29,7 @@ services:
       - "traefik.http.routers.radarr.rule=Host(`${RADARR_HOST}`)"
       - "traefik.http.routers.radarr.entrypoints=websecure"
       - "traefik.http.routers.radarr.tls=true"
-      - "traefik.http.routers.radarr.tls.certresolver=le"
+      - "traefik.http.routers.radarr.tls.certresolver=${CERTRESOLVER}"
 
   bazarr:
     labels:
@@ -37,7 +37,7 @@ services:
       - "traefik.http.routers.bazarr.rule=Host(`${BAZARR_HOST}`)"
       - "traefik.http.routers.bazarr.entrypoints=websecure"
       - "traefik.http.routers.bazarr.tls=true"
-      - "traefik.http.routers.bazarr.tls.certresolver=le"
+      - "traefik.http.routers.bazarr.tls.certresolver=${CERTRESOLVER}"
 
   jellyfin:
     labels:
@@ -45,7 +45,7 @@ services:
       - "traefik.http.routers.jellyfin.rule=Host(`${JELLYFIN_HOST}`)"
       - "traefik.http.routers.jellyfin.entrypoints=websecure"
       - "traefik.http.routers.jellyfin.tls=true"
-      - "traefik.http.routers.jellyfin.tls.certresolver=le"
+      - "traefik.http.routers.jellyfin.tls.certresolver=${CERTRESOLVER}"
 
   seerr:
     labels:
@@ -53,9 +53,4 @@ services:
       - "traefik.http.routers.seerr.rule=Host(`${SEERR_HOST}`)"
       - "traefik.http.routers.seerr.entrypoints=websecure"
       - "traefik.http.routers.seerr.tls=true"
-      - "traefik.http.routers.seerr.tls.certresolver=le"
-
-networks:
-  reverse-proxy:
-    external: true
-    name: ${REVERSE_PROXY_NETWORK_NAME}
+      - "traefik.http.routers.seerr.tls.certresolver=${CERTRESOLVER}"
