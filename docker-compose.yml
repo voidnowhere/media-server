@@ -170,6 +170,7 @@ services:
     container_name: seerr
     environment:
       - TZ=${TZ}
+      - LOG_LEVEL=info
     ports:
       - 5055:5055
     volumes:
