@@ -10,7 +10,7 @@ services:
       - zurgdata:/app/data
 
   decypharr:
-    image: cy01/blackhole:v1.1.6
+    image: cy01/blackhole:v2.0
     container_name: decypharr
     ports:
       - 8282:8282
