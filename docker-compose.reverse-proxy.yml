@@ -1,10 +1,4 @@
 services:
-  zurg:
-    ports: !reset []
-    networks:
-      - default
-      - reverse-proxy
-
   decypharr:
     ports: !reset []
     networks:

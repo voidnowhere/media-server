@@ -1,14 +1,4 @@
 services:
-  zurg:
-    image: ghcr.io/debridmediamanager/zurg-testing:v0.9.3-final
-    container_name: zurg
-    restart: unless-stopped
-    ports:
-      - 9999:9999
-    volumes:
-      - ./zurg/config.yml:/app/config.yml:ro
-      - zurgdata:/app/data
-
   decypharr:
     image: cy01/blackhole:v2.4
     container_name: decypharr
@@ -199,7 +189,6 @@ services:
       - radarr
 
 volumes:
-  zurgdata:
   decypharrconfig:
   prowlarrconfig:
   bazarrconfig:
