@@ -115,7 +115,7 @@ services:
         restart: true
 
   bazarr:
-    image: lscr.io/linuxserver/bazarr:1.6.0
+    image: lscr.io/linuxserver/bazarr:1.6.1
     container_name: bazarr
     environment:
       - PUID=${UID}
