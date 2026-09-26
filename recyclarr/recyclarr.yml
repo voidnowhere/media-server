@@ -158,7 +158,7 @@ sonarr:
             # - 9b64dff695c2115facf1b6ea59c9bd07  # x265 (no HDR/DV)
         - trash_id: 85fae4a2294965b75710ef2989c850eb  # [Streaming Services] HD/UHD boost
           select:
-            - 218e93e5702f44a68ad9e3c6ba87d2f0  # HD Streaming Boost
+            # - 218e93e5702f44a68ad9e3c6ba87d2f0  # HD Streaming Boost
             # - 43b3cf48cb385cd3eac608ee6bca7f09  # UHD Streaming Boost
         - trash_id: 59c3af66780d08332fdc64e68297098f  # [Unwanted] Unwanted Formats
           select:
@@ -216,14 +216,14 @@ sonarr:
         #     - 041d90b435ebd773271cea047a457a6a  # x266
         - trash_id: f54985e5e96747cef58731f1cf4c9181  # [Streaming Services] Anime
           select:
-            - a370d974bc7b80374de1d9ba7519760b  # ABEMA
-            - d54cd2bf1326287275b56bccedb72ee2  # ADN
-            - 7dd31f3dee6d2ef8eeaa156e23c3857e  # B-Global
-            - 4c67ff059210182b59cdd41697b8cb08  # Bilibili
-            - 3e0b26604165f463f3e8e192261e7284  # CR
-            - 1284d18e693de8efe0fe7d6b3e0b9170  # FUNi
-            - 570b03b3145a25011bf073274a407259  # HIDIVE
-            - 44a8ee6403071dd7b8a3a8dd3fe8cb20  # VRV
+            # - a370d974bc7b80374de1d9ba7519760b  # ABEMA
+            # - d54cd2bf1326287275b56bccedb72ee2  # ADN
+            # - 7dd31f3dee6d2ef8eeaa156e23c3857e  # B-Global
+            # - 4c67ff059210182b59cdd41697b8cb08  # Bilibili
+            # - 3e0b26604165f463f3e8e192261e7284  # CR
+            # - 1284d18e693de8efe0fe7d6b3e0b9170  # FUNi
+            # - 570b03b3145a25011bf073274a407259  # HIDIVE
+            # - 44a8ee6403071dd7b8a3a8dd3fe8cb20  # VRV
         #     - e5e6405d439dcd1af90962538acd4fe0  # WKN
         # - trash_id: 7832db22b71ab669458c17a2850d6913  # [Streaming Services] Miscellaneous
         #   select:
