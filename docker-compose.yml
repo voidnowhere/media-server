@@ -1,6 +1,6 @@
 services:
   decypharr:
-    image: cy01/blackhole:v2.5
+    image: cy01/blackhole:v2.7
     container_name: decypharr
     ports:
       - 8282:8282
