@@ -5,7 +5,7 @@ services:
     ports:
       - 8282:8282
     volumes:
-      - decypharrconfig:/app
+      - decypharr-config:/app
       - ./content/mnt:/content/mnt
       - ./content/symlinks:/content/symlinks
       - ./content/media:/content/media
@@ -39,7 +39,7 @@ services:
     devices:
       - /dev/fuse:/dev/fuse:rwm
     command: >
-      mount realdebrid: /data
+      mount decypharr: /data
       --allow-other
       --allow-non-empty
       --dir-cache-time 10s
@@ -61,7 +61,7 @@ services:
       - PGID=${GID}
       - TZ=${TZ}
     volumes:
-      - prowlarrconfig:/config
+      - prowlarr-config:/config
     ports:
       - 9696:9696
     restart: unless-stopped
@@ -76,7 +76,7 @@ services:
       - PGID=${GID}
       - TZ=${TZ}
     volumes:
-      - sonarrconfig:/config
+      - sonarr-config:/config
       - ./content/symlinks:/content/symlinks
       - ./content/mnt:/content/mnt
       - ./content/media/shows:/content/media/shows
@@ -99,7 +99,7 @@ services:
       - PGID=${GID}
       - TZ=${TZ}
     volumes:
-      - radarrconfig:/config
+      - radarr-config:/config
       - ./content/symlinks:/content/symlinks
       - ./content/mnt:/content/mnt
       - ./content/media/movies:/content/media/movies
@@ -122,7 +122,7 @@ services:
       - PGID=${GID}
       - TZ=${TZ}
     volumes:
-      - bazarrconfig:/config
+      - bazarr-config:/config
       - ./content/mnt:/content/mnt
       - ./content/media/shows:/content/media/shows
       - ./content/media/anime_shows:/content/media/anime_shows
@@ -143,8 +143,8 @@ services:
     ports:
       - 8096:8096
     volumes:
-      - jellyfinconfig:/config
-      - jellyfincache:/cache
+      - jellyfin-config:/config
+      - jellyfin-cache:/cache
       - ./content:/content:ro
     devices:
       - /dev/dri/renderD128:/dev/dri/renderD128
@@ -164,7 +164,7 @@ services:
     ports:
       - 5055:5055
     volumes:
-      - seerrconfig:/app/config
+      - seerr-config:/app/config
     restart: unless-stopped
     depends_on:
       - sonarr
@@ -189,11 +189,19 @@ services:
       - radarr
 
 volumes:
-  decypharrconfig:
-  prowlarrconfig:
-  bazarrconfig:
-  sonarrconfig:
-  radarrconfig:
-  jellyfinconfig:
-  jellyfincache:
-  seerrconfig:
+  decypharr-config:
+    external: true
+  prowlarr-config:
+    external: true
+  bazarr-config:
+    external: true
+  sonarr-config:
+    external: true
+  radarr-config:
+    external: true
+  jellyfin-config:
+    external: true
+  jellyfin-cache:
+    external: true
+  seerr-config:
+    external: true
