@@ -54,7 +54,7 @@ services:
     restart: unless-stopped
 
   prowlarr:
-    image: lscr.io/linuxserver/prowlarr:2.7.0
+    image: lscr.io/linuxserver/prowlarr:3.0.2
     container_name: prowlarr
     environment:
       - PUID=${UID}
